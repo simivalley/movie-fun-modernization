@@ -15,7 +15,8 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.fasterxml.jackson.dataformat.csv.CsvSchema.ColumnType.NUMBER;
-import static org.superbiz.moviefun.albums.CsvUtils.readFromCsv;
+import static org.superbiz.moviefun.CsvUtils.readFromCsv;
+
 
 @Service
 public class AlbumsUpdater {

@@ -8,8 +8,12 @@ version = "1.1.0-SNAPSHOT"
 
 description = "OpenEJB :: Web Examples :: Moviefun"
 
+
+
 dependencies {
     compile project(":components:movies")
+    compile project(":components:albums")
+    compile project(":components:blobstore")
     compile "taglibs:standard:1.1.2"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
@@ -27,7 +31,5 @@ dependencies {
     compile "org.apache.geronimo.components:geronimo-jaspi:2.0.0"
 
     testCompile "junit:junit:4.12"
-
-    
 }
 
