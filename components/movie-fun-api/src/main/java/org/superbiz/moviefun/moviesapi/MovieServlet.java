@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.superbiz.moviefun.movies;
+package org.superbiz.moviefun.moviesapi;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+
 
 /**
  * @version $Revision$ $Date$
