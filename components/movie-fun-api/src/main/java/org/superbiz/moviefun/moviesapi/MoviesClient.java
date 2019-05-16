@@ -31,7 +31,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class MoviesClient {
@@ -99,7 +101,6 @@ public class MoviesClient {
 
     public int count(String field, String searchTerm) {
 
-
         List<MovieInfo> movies = getMovies();
 
         switch (field.trim().toLowerCase()) {
@@ -131,22 +132,33 @@ public class MoviesClient {
     }
 
     public List<MovieInfo> findRange(String field, String searchTerm, int firstResult, int maxResults) {
-        CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<MovieInfo> cq = qb.createQuery(MovieInfo.class);
-        Root<MovieInfo> root = cq.from(MovieInfo.class);
-        EntityType<MovieInfo> type = entityManager.getMetamodel().entity(MovieInfo.class);
 
-        Path<String> path = root.get(type.getDeclaredSingularAttribute(field, String.class));
-        Predicate condition = qb.like(path, "%" + searchTerm + "%");
+        List<MovieInfo> movies = getMovies();
+        List<MovieInfo> filteredMovies = new LinkedList<>();
+        switch (field.trim().toLowerCase()) {
 
-        cq.where(condition);
-        TypedQuery<MovieInfo> q = entityManager.createQuery(cq);
-        q.setMaxResults(maxResults);
-        q.setFirstResult(firstResult);
-        return q.getResultList();
+            case "director":
+                return movies.stream().filter(m -> m.getDirector().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+
+            case "title":
+                return movies.stream().filter(m -> m.getTitle().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+            case "genre":
+                return movies.stream().filter(m -> m.getGenre().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+            default:
+                return filteredMovies;
+        }
+
     }
 
     public void clean() {
-        entityManager.createQuery("delete from MovieInfo").executeUpdate();
+        List<MovieInfo> movieInfos = getMovies();
+
+        for ( MovieInfo m : movieInfos){
+            deleteMovie(m);
+
+        }
     }
 }
