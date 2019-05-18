@@ -50,7 +50,7 @@ public class MoviesClient {
     public void addMovie(MovieInfo movie) {
         logger.debug("Creating movie with title {}, and year {}", movie.getTitle(), movie.getYear());
 
-        restTemplate.put(movieServiceUrl, movie);
+        restTemplate.postForEntity(movieServiceUrl, movie, MovieInfo.class);
 
 
     }
@@ -67,8 +67,8 @@ public class MoviesClient {
     }
 
     public void deleteMovieId(long id) {
-        MovieInfo movie = find(id);
-        deleteMovie(movie);
+	  restTemplate.delete(movieServiceUrl + "/" + id);
+       
     }
 
     public List<MovieInfo> getMovies() {
@@ -127,21 +127,28 @@ public class MoviesClient {
 
         List<MovieInfo> movies = getMovies();
         List<MovieInfo> filteredMovies = new LinkedList<>();
+
         switch (field.trim().toLowerCase()) {
 
             case "director":
-                return movies.stream().filter(m -> m.getDirector().equalsIgnoreCase(searchTerm))
-                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+                filteredMovies =  movies.stream().filter(m -> m.getDirector().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList());
+
 
             case "title":
-                return movies.stream().filter(m -> m.getTitle().equalsIgnoreCase(searchTerm))
-                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+                filteredMovies =  movies.stream().filter(m -> m.getTitle().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList());
+
+
             case "genre":
-                return movies.stream().filter(m -> m.getGenre().equalsIgnoreCase(searchTerm))
-                        .collect(Collectors.toList()).subList(firstResult,maxResults);
+                filteredMovies =  movies.stream().filter(m -> m.getGenre().equalsIgnoreCase(searchTerm))
+                        .collect(Collectors.toList());
             default:
-                return filteredMovies;
+
         }
+        int size = filteredMovies.size();
+
+        return filteredMovies.subList(firstResult, maxResults= (size<=maxResults)? size: maxResults);
 
     }
 

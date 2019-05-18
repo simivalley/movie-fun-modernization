@@ -36,8 +36,12 @@ public class HomeController {
 
     @GetMapping("/setup")
     public String setup(Map<String, Object> model) {
+
+        System.out.println (  " setup is entered");
         for (MovieInfo movie : movieFixtures.load()) {
             moviesClient.addMovie(movie);
+
+            System.out.println (  " moviesCleint add is finished ");
         }
 
         for (Album album : albumFixtures.load()) {
