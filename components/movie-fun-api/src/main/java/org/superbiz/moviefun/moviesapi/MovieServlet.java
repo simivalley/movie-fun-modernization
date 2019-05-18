@@ -64,7 +64,7 @@ public class MovieServlet extends HttpServlet {
             int rating = Integer.parseInt(request.getParameter("rating"));
             int year = Integer.parseInt(request.getParameter("year"));
 
-            MovieInfo movie = new MovieInfo(title, director, genre, rating, year);
+            MovieInfo movie = new MovieInfo(null, title, director, genre, rating, year);
 
             moviesClient.addMovie(movie);
             response.sendRedirect("moviefun");
@@ -115,7 +115,7 @@ public class MovieServlet extends HttpServlet {
             }
 
             int start = (page - 1) * PAGE_SIZE;
-            List<MoviesClient> range;
+            List<MovieInfo> range;
 
             if (StringUtils.isEmpty(key) || StringUtils.isEmpty(field)) {
                 range = moviesClient.findAll(start, PAGE_SIZE);

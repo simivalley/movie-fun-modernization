@@ -2,8 +2,6 @@ package org.superbiz.moviefun.movies;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MovieServiceApplication {
@@ -11,8 +9,5 @@ public class MovieServiceApplication {
         SpringApplication.run(MovieServiceApplication.class, args);
     }
 
-    @Bean
-    public ServletRegistrationBean actionServletRegistration(MovieServlet movieServlet) {
-        return new ServletRegistrationBean(movieServlet, "/moviefun/*");
-    }
+
 }

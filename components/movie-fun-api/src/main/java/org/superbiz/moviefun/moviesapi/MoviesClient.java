@@ -24,22 +24,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
+
 public class MoviesClient {
 
-    //get MovieServiceApllication object
-    //use obj to call MovieServlet
+
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
