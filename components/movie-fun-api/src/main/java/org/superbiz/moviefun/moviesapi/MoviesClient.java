@@ -80,10 +80,12 @@ public class MoviesClient {
         return movies;
     }
 
-    public List<MovieInfo> findAll(int firstResult, int maxResults) {
+    public List<MovieInfo> findAll(int firstResult, int maxResult) {
         List<MovieInfo> movies = getMovies();
 
-        return movies.subList(firstResult, maxResults);
+        maxResult += firstResult;
+
+        return movies.subList(firstResult, maxResult);
     }
 
     public int countAll() {

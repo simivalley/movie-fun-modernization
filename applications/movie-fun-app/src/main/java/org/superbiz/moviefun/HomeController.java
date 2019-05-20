@@ -2,11 +2,9 @@ package org.superbiz.moviefun;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.superbiz.moviefun.albums.Album;
-import org.superbiz.moviefun.albums.AlbumFixtures;
-import org.superbiz.moviefun.albums.AlbumsBean;
-
-
+import org.superbiz.moviefun.albumsapi.AlbumFixtures;
+import org.superbiz.moviefun.albumsapi.AlbumInfo;
+import org.superbiz.moviefun.albumsapi.AlbumsClient;
 
 import org.superbiz.moviefun.moviesapi.MovieFixtures;
 import org.superbiz.moviefun.moviesapi.MovieInfo;
@@ -18,21 +16,35 @@ import java.util.Map;
 public class HomeController {
 
     private final MoviesClient moviesClient;
-    private final AlbumsBean albumsBean;
+    private final AlbumsClient albumsClient;
+
     private final MovieFixtures movieFixtures;
     private final AlbumFixtures albumFixtures;
 
-    public HomeController(MoviesClient moviesClient, AlbumsBean albumsBean, MovieFixtures movieFixtures, AlbumFixtures albumFixtures) {
+    public HomeController(MoviesClient moviesClient, AlbumsClient albumsClient, MovieFixtures movieFixtures, AlbumFixtures albumFixtures) {
         this.moviesClient = moviesClient;
-        this.albumsBean = albumsBean;
+        this.albumsClient = albumsClient;
         this.movieFixtures = movieFixtures;
         this.albumFixtures = albumFixtures;
     }
+
+//    public HomeController(MoviesClient moviesClient, MovieFixtures movieFixtures) {
+//        this.moviesClient = moviesClient;
+//        //this.albumsBean = albumsBean;
+//        this.movieFixtures = movieFixtures;
+//        //this.albumFixtures = albumFixtures;
+//    }
 
     @GetMapping("/")
     public String index() {
         return "index";
     }
+
+//    @GetMapping("/albums")
+//    public String albums() {
+//        System.out.println("*******************ALBUMS CALLED");
+//        return "albums";
+//    }
 
     @GetMapping("/setup")
     public String setup(Map<String, Object> model) {
@@ -40,16 +52,15 @@ public class HomeController {
         System.out.println (  " setup is entered");
         for (MovieInfo movie : movieFixtures.load()) {
             moviesClient.addMovie(movie);
-
-            System.out.println (  " moviesCleint add is finished ");
         }
 
-        for (Album album : albumFixtures.load()) {
-            albumsBean.addAlbum(album);
+        for (AlbumInfo album : albumFixtures.load()) {
+            albumsClient.addAlbum(album);
+            System.out.println(" album added.");
         }
 
         model.put("movies", moviesClient.getMovies());
-        model.put("albums", albumsBean.getAlbums());
+        model.put("albums", albumsClient.getAlbums());
 
         return "setup";
     }

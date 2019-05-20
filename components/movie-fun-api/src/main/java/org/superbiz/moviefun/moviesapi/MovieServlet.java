@@ -124,6 +124,8 @@ public class MovieServlet extends HttpServlet {
             }
 
             int end = start + range.size();
+            System.out.println (  "start************************************ "   + start);
+            System.out.println (  "end ************************************ "   + end);
 
             request.setAttribute("count", count);
             request.setAttribute("start", start + 1);
