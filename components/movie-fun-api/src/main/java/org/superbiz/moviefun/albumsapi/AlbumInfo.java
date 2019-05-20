@@ -9,6 +9,9 @@ public class AlbumInfo {
     private int year;
     private int rating;
 
+    public AlbumInfo() {
+
+    }
 
     public AlbumInfo(Long id, String artist, String title, int year, int rating) {
         this.id = id;
