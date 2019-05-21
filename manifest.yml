@@ -20,5 +20,5 @@ applications:
     services:
       - photo-storage
     env:
-      ALBUMS_URL: http://album-service-chipper-wombat.cfapps.io
-      MOVIES_URL: http://movie-service-fluent-kookaburra.cfapps.io
+      ALBUMS_URL: http://album-service-chipper-wombat.cfapps.io/albums
+      MOVIES_URL: http://movie-service-fluent-kookaburra.cfapps.io/movies
